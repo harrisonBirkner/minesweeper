@@ -32,10 +32,15 @@ function initGame() {
     //additional logic for mines and game state mgmt here
 }
 
-function handleCellClick(index) {
+function handleCellClick(i) {
     //game logic for handling cell clicks
-    console.log('Cell clicked: ', index);
-    cells[index].classList.remove('hidden');
+    cells[i].classList.remove('hidden');
+    if (cells[i].classList.contains('mine')) {
+        cells.forEach(cell => {
+            cell.classList.remove('hidden');
+        });
+        gameBoard.style.pointerEvents = 'none';
+    }
 }
 
 initGame();
