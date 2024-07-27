@@ -1,0 +1,38 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;            /* Enable flexbox on the body element */
+    flex-direction: column;
+    justify-content: center; /* Center content horizontally */
+    align-items: center;     /* Center content vertically */
+    min-height: 100vh;        /* Ensure the body takes at least the full viewport height */
+    margin: 0;                /* Remove default margin */
+}
+
+#game-board {
+    display: flex;
+    flex-flow: row wrap;
+    width: 400px;
+    margin: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.cell {
+    width: 40px;
+    height: 40px;
+    background-color: lightgray;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+    border: 1px solid darkslategray;
+    box-sizing: border-box;
+}
+
+.mine {
+    background-color: red;
+}
+
+.hidden {
+    background-color: darkslategray;
+    background: linear-gradient(to bottom right, #fff, darkslategray);
+}
