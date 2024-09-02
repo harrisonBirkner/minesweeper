@@ -1,8 +1,9 @@
 let gameBoard = document.getElementById('game-board');
-const rows = 10;
-const cols = 10;
-const minesCount = 20;
-let cells = [];
+const ROWS = 10;
+const COLS = 10;
+const MINES_COUNT = 20;
+let gameOverMsg = document.getElementById('game-over');
+let cells = Array.from(document.querySelectorAll('.cell'));
 let mineIndices = new Set();
 const restartBtn = document.getElementById('restart');
 restartBtn.addEventListener('click', () => restartGame());
@@ -12,23 +13,19 @@ function initGame() {
 
     
     // Create a unique set of mine indices
-    while (mineIndices.size < minesCount) {
-        let randomIndex = Math.floor(Math.random() * (rows * cols));
+    while (mineIndices.size < MINES_COUNT) {
+        let randomIndex = Math.floor(Math.random() * (ROWS * COLS));
         mineIndices.add(randomIndex);
     }
 
-    for (let i = 0; i < rows * cols; i++) {
-        let cell = document.createElement('div');
-        cell.classList.add('cell', 'hidden');
+    for (let i = 0; i < cells.length; i++) {
+        //cell.classList.add('cell', 'hidden');
 
         // Check if the current index is a mine
         if (mineIndices.has(i)) {
-            cell.classList.add('mine'); // Add a class or any indication for mines
+            cells[i].classList.add('mine'); // Add a class or any indication for mines
         }
-
-        cell.addEventListener('click', () => handleCellClick(i));
-        cells.push(cell);
-        gameBoard.appendChild(cell);
+        cells[i].addEventListener('click', () => handleCellClick(i));
     }
 
     //additional logic for mines and game state mgmt here
@@ -50,20 +47,24 @@ function gameOver() {
         cell.classList.remove('hidden');
     });
     gameBoard.style.pointerEvents = 'none';
-    let gameOverDiv = document.createElement('div');
-    gameOverDiv.id = 'game-over';
-    let gameOverMsg = document.createElement('h2');
-    gameOverMsg.style.color = 'red';
-    gameOverMsg.textContent = 'Game Over';
-    gameOverDiv.appendChild(gameOverMsg);
-    document.body.appendChild(gameOverDiv);
+    gameOverMsg.style.visibility = 'visible';
 }
 
 function restartGame() {
-    gameBoard.textContent = '';
     gameBoard.style.pointerEvents = '';
     mineIndices.clear();
-    document.body.removeChild(document.getElementById('game-over'));
+    gameOverMsg.style.visibility = 'hidden';
+
+    let cellsToHide = document.querySelectorAll('.cell:not(.hidden)');
+    cellsToHide.forEach(cell => {
+        cell.classList.add('hidden');
+    });
+
+    let minesToReset = document.querySelectorAll('.mine');
+    cellsToHide.forEach(cell => {
+        cell.classList.remove('mine');
+    });
+
     initGame();
 }
 
