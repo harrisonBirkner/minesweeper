@@ -1,5 +1,11 @@
+:root {
+    --cell-color: gray;
+    --cell-light-color: lightgray;
+    --cell-dark-color: darkslategray;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Nunito';
     display: grid;            /* Enable flexbox on the body element */
     grid-template-rows: repeat(4, 1fr);
     justify-content: center; /* Center content horizontally */
@@ -7,6 +13,13 @@ body {
     max-height: 100vh;        /* Ensure the body takes at least the full viewport height */
     margin: 0;                /* Remove default margin */
     text-align: center;
+}
+
+.main-section {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
 }
 
 #game-board {
@@ -18,14 +31,45 @@ body {
     pointer-events: auto;
 }
 
+#pause-menu {
+    width: 400px;
+    height: 400px;
+    z-index: 1;
+    display: none;
+    grid-template-rows: repeat(1, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+    align-items: center;
+    background-color: var(--cell-color);
+    border: 10px solid var(--cell-light-color);
+    border-bottom-color: var(--cell-dark-color);
+    border-right-color: var(--cell-dark-color);
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
+#pause-text {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end: 1;
+}
+
+#pause-btn {
+    background-color: var(--cell-color);
+    border: 10px solid var(--cell-light-color);
+    border-bottom-color: var(--cell-dark-color);
+    border-right-color: var(--cell-dark-color);
+    font-weight: bold;
+}
+
 .cell {
     width: 40px;
     height: 40px;
-    background-color: lightgray;
+    background-color: var(--cell-light-color);
     text-align: center;
     line-height: 40px;
     cursor: pointer;
-    border: 1px solid darkslategray;
+    border: 1px solid var(--cell-dark-color);
     box-sizing: border-box;
 }
 
@@ -34,10 +78,18 @@ body {
 }
 
 .hidden {
-    background-color: gray;
-    border: 10px solid lightgray;
-    border-bottom-color: darkslategray;
-    border-right-color: darkslategray;
+    background-color: var(--cell-color);
+    border: 10px solid var(--cell-light-color);
+    border-bottom-color: var(--cell-dark-color);
+    border-right-color: var(--cell-dark-color);
+}
+
+#restart {
+    background-color: var(--cell-color);
+    border: 10px solid var(--cell-light-color);
+    border-bottom-color: var(--cell-dark-color);
+    border-right-color: var(--cell-dark-color);
+    font-weight: bold;
 }
 
 #game-over {

@@ -6,7 +6,10 @@ let gameOverMsg = document.getElementById('game-over');
 let cells = Array.from(document.querySelectorAll('.cell'));
 let mineIndices = new Set();
 const restartBtn = document.getElementById('restart');
+const pauseBtn = document.getElementById('pause-btn');
+pauseBtn.addEventListener('click', () => pauseGame());
 restartBtn.addEventListener('click', () => restartGame());
+const pauseMenu = document.getElementById('pause-menu');
 
 //init game
 function initGame() {
@@ -51,6 +54,12 @@ function gameOver() {
 }
 
 function restartGame() {
+    console.log('inside restart');
+    if ((getComputedStyle(pauseMenu).display == 'grid') || (pauseMenu.style.display == 'grid')) {
+        console.log('inside if');
+        pauseMenu.style.display = 'none';
+        pauseBtn.textContent = 'Pause';
+    }
     gameBoard.style.pointerEvents = '';
     mineIndices.clear();
     gameOverMsg.style.visibility = 'hidden';
@@ -66,6 +75,20 @@ function restartGame() {
     });
 
     initGame();
+}
+
+function pauseGame() {
+
+    if (getComputedStyle(pauseMenu).display == 'none') {
+        console.log("pausing")
+        pauseBtn.textContent = 'Resume';
+        pauseMenu.style.display = 'grid';
+    }
+    else {
+        console.log("resuming")
+        pauseBtn.textContent = 'Pause';
+        pauseMenu.style.display = 'none';
+    }
 }
 
 initGame();
