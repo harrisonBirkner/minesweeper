@@ -107,7 +107,9 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 71 && i <= 79) || 
         (i >= 81 && i <= 89) || 
         (i >= 91 && i <= 99)) {
-        surroundingCells[0] = (i - 11);
+            if (cells[i - 11].classList.contains('hidden')) {
+                surroundingCells[0] = (i - 11);
+            }
     }
     //top middle
     if ((i >= 10 && i <= 19) || 
@@ -119,7 +121,9 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 70 && i <= 79) || 
         (i >= 80 && i <= 89) || 
         (i >= 90 && i <= 99)) {
-        surroundingCells[1] = (i - 10);
+            if (cells[i - 10].classList.contains('hidden')) {
+                surroundingCells[1] = (i - 10);
+            }
     }
     //top right 
     if ((i >= 10 && i <= 18) || 
@@ -131,7 +135,9 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 70 && i <= 78) || 
         (i >= 80 && i <= 88) || 
         (i >= 90 && i <= 98)) {
-            surroundingCells[2] = (i - 9);
+            if (cells[i - 9].classList.contains('hidden')) {
+                surroundingCells[2] = (i - 9);
+            }
     }
     //middle right
     if ((i >= 0 && i <= 8) ||
@@ -144,7 +150,9 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 70 && i <= 78) || 
         (i >= 80 && i <= 88) || 
         (i >= 90 && i <= 98)) {
-            surroundingCells[3] = (i + 1);
+            if (cells[i + 1].classList.contains('hidden')) {
+                surroundingCells[3] = (i + 1);
+            }
     }
     //bottom right
     if ((i >= 0 && i <= 8) ||
@@ -156,7 +164,9 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 60 && i <= 68) || 
         (i >= 70 && i <= 78) || 
         (i >= 80 && i <= 88)) {
-            surroundingCells[4] = (i + 11);
+            if (cells[i + 11].classList.contains('hidden')) {
+                surroundingCells[4] = (i + 11);
+            }
     }
     //bottom middle
     if ((i >= 0 && i <= 9) ||
@@ -168,7 +178,9 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 60 && i <= 69) || 
         (i >= 70 && i <= 79) || 
         (i >= 80 && i <= 89)) {
-            surroundingCells[5] = (i + 10);
+            if (cells[i + 10].classList.contains('hidden')) {
+                surroundingCells[5] = (i + 10);
+            }
     }
     //bottom left
     if ((i >= 1 && i <= 9) ||
@@ -180,7 +192,9 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 61 && i <= 69) || 
         (i >= 71 && i <= 79) || 
         (i >= 81 && i <= 89)) {
-            surroundingCells[6] = (i + 9);
+            if (cells[i + 9].classList.contains('hidden')) {
+                surroundingCells[6] = (i + 9);
+            }
     }
     //middle left
     if ((i >= 1 && i <= 9) ||
@@ -193,9 +207,14 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 71 && i <= 79) || 
         (i >= 81 && i <= 89) || 
         (i >= 91 && i <= 99)) {
-            surroundingCells[7] = (i - 1);
+            if (cells[i - 1].classList.contains('hidden')) {
+                surroundingCells[7] = (i - 1);
+            }
     }
     console.log(surroundingCells);
+    if (surroundingCells[0] != null) {
+        checkAndExpandSurroundingCells(surroundingCells[0]);
+    }
 }
 
 initGame();
