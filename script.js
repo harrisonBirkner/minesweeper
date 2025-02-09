@@ -43,6 +43,9 @@ function handleCellClick(i) {
         console.log('MINE CLICKED');
         gameOver();
     }
+    else {
+        checkAndExpandSurroundingCells(i);
+    }
 }
 
 function gameOver() {
@@ -89,6 +92,110 @@ function pauseGame() {
         pauseBtn.textContent = 'Pause';
         pauseMenu.style.display = 'none';
     }
+}
+
+function checkAndExpandSurroundingCells(i) {
+    let surroundingCells = new Array(8).fill(null); //any given square will have a max of 8 squares surrounding it
+                                                    //first index is top left corner, then continues clockwise
+    //top left
+    if ((i >= 11 && i <= 19) || 
+        (i >= 21 && i <= 29) || 
+        (i >= 31 && i <= 39) || 
+        (i >= 41 && i <= 49) || 
+        (i >= 51 && i <= 59) || 
+        (i >= 61 && i <= 69) || 
+        (i >= 71 && i <= 79) || 
+        (i >= 81 && i <= 89) || 
+        (i >= 91 && i <= 99)) {
+        surroundingCells[0] = (i - 11);
+    }
+    //top middle
+    if ((i >= 10 && i <= 19) || 
+        (i >= 20 && i <= 29) || 
+        (i >= 30 && i <= 39) || 
+        (i >= 40 && i <= 49) || 
+        (i >= 50 && i <= 59) || 
+        (i >= 60 && i <= 69) || 
+        (i >= 70 && i <= 79) || 
+        (i >= 80 && i <= 89) || 
+        (i >= 90 && i <= 99)) {
+        surroundingCells[1] = (i - 10);
+    }
+    //top right 
+    if ((i >= 10 && i <= 18) || 
+        (i >= 20 && i <= 28) || 
+        (i >= 30 && i <= 38) || 
+        (i >= 40 && i <= 48) || 
+        (i >= 50 && i <= 58) || 
+        (i >= 60 && i <= 68) || 
+        (i >= 70 && i <= 78) || 
+        (i >= 80 && i <= 88) || 
+        (i >= 90 && i <= 98)) {
+            surroundingCells[2] = (i - 9);
+    }
+    //middle right
+    if ((i >= 0 && i <= 8) ||
+        (i >= 10 && i <= 18) || 
+        (i >= 20 && i <= 28) || 
+        (i >= 30 && i <= 38) || 
+        (i >= 40 && i <= 48) || 
+        (i >= 50 && i <= 58) || 
+        (i >= 60 && i <= 68) || 
+        (i >= 70 && i <= 78) || 
+        (i >= 80 && i <= 88) || 
+        (i >= 90 && i <= 98)) {
+            surroundingCells[3] = (i + 1);
+    }
+    //bottom right
+    if ((i >= 0 && i <= 8) ||
+        (i >= 10 && i <= 18) || 
+        (i >= 20 && i <= 28) || 
+        (i >= 30 && i <= 38) || 
+        (i >= 40 && i <= 48) || 
+        (i >= 50 && i <= 58) || 
+        (i >= 60 && i <= 68) || 
+        (i >= 70 && i <= 78) || 
+        (i >= 80 && i <= 88)) {
+            surroundingCells[4] = (i + 11);
+    }
+    //bottom middle
+    if ((i >= 0 && i <= 9) ||
+        (i >= 10 && i <= 19) || 
+        (i >= 20 && i <= 29) || 
+        (i >= 30 && i <= 39) || 
+        (i >= 40 && i <= 49) || 
+        (i >= 50 && i <= 59) || 
+        (i >= 60 && i <= 69) || 
+        (i >= 70 && i <= 79) || 
+        (i >= 80 && i <= 89)) {
+            surroundingCells[5] = (i + 10);
+    }
+    //bottom left
+    if ((i >= 1 && i <= 9) ||
+        (i >= 11 && i <= 19) || 
+        (i >= 21 && i <= 29) || 
+        (i >= 31 && i <= 39) || 
+        (i >= 41 && i <= 49) || 
+        (i >= 51 && i <= 59) || 
+        (i >= 61 && i <= 69) || 
+        (i >= 71 && i <= 79) || 
+        (i >= 81 && i <= 89)) {
+            surroundingCells[6] = (i + 9);
+    }
+    //middle left
+    if ((i >= 1 && i <= 9) ||
+        (i >= 11 && i <= 19) || 
+        (i >= 21 && i <= 29) || 
+        (i >= 31 && i <= 39) || 
+        (i >= 41 && i <= 49) || 
+        (i >= 51 && i <= 59) || 
+        (i >= 61 && i <= 69) || 
+        (i >= 71 && i <= 79) || 
+        (i >= 81 && i <= 89) || 
+        (i >= 91 && i <= 99)) {
+            surroundingCells[7] = (i - 1);
+    }
+    console.log(surroundingCells);
 }
 
 initGame();
