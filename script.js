@@ -10,6 +10,9 @@ const pauseBtn = document.getElementById('pause-btn');
 pauseBtn.addEventListener('click', () => pauseGame());
 restartBtn.addEventListener('click', () => restartGame());
 const pauseMenu = document.getElementById('pause-menu');
+let surroundingCells = new Array(8).fill(null); //any given square will have a max of 8 squares surrounding it
+                                                    //first index is top left corner, then continues clockwise
+let numOfSurroundingMines = 0;
 
 //init game
 function initGame() {
@@ -98,10 +101,9 @@ function checkAndExpandSurroundingCells(i) {
     if (i == null) {
         return;
     }
-    let surroundingCells = new Array(8).fill(null); //any given square will have a max of 8 squares surrounding it
+    surroundingCells = new Array(8).fill(null); //any given square will have a max of 8 squares surrounding it
                                                     //first index is top left corner, then continues clockwise
-    let indexOfCurrentSurroundingCell = 0;
-    let numOfSurroundingMines = 0;
+    numOfSurroundingMines = 0;
 
     //top left
     if ((i >= 11 && i <= 19) || 
@@ -113,18 +115,7 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 71 && i <= 79) || 
         (i >= 81 && i <= 89) || 
         (i >= 91 && i <= 99)) {
-            indexOfCurrentSurroundingCell = i - 11;
-            if (cells[indexOfCurrentSurroundingCell].classList.contains('hidden')) {
-                if (cells[indexOfCurrentSurroundingCell].classList.contains('mine')) {
-                    //TODO: add to counter of mines around cells[i]
-                    
-                }  
-                else {
-                    surroundingCells[0] = indexOfCurrentSurroundingCell;
-                    cells[surroundingCells[0]].classList.remove('hidden');
-                    console.log('after hidden class removal');
-                }
-            }
+            determineIfSurroundingCellIsMine(i - 11, 0);
     }
     //top middle
     if ((i >= 10 && i <= 19) || 
@@ -136,14 +127,7 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 70 && i <= 79) || 
         (i >= 80 && i <= 89) || 
         (i >= 90 && i <= 99)) {
-            indexOfCurrentSurroundingCell = i - 10;
-            if (cells[indexOfCurrentSurroundingCell].classList.contains('hidden')) {
-                if (!cells[indexOfCurrentSurroundingCell].classList.contains('mine')) {
-                    surroundingCells[1] = indexOfCurrentSurroundingCell;
-                    cells[surroundingCells[1]].classList.remove('hidden');
-                    console.log('after hidden class removal');
-                }
-            }
+            determineIfSurroundingCellIsMine(i - 10, 1);
     }
     //top right 
     if ((i >= 10 && i <= 18) || 
@@ -155,14 +139,7 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 70 && i <= 78) || 
         (i >= 80 && i <= 88) || 
         (i >= 90 && i <= 98)) {
-            indexOfCurrentSurroundingCell = i - 9;
-            if (cells[indexOfCurrentSurroundingCell].classList.contains('hidden')) {
-                if (!cells[indexOfCurrentSurroundingCell].classList.contains('mine')) {
-                    surroundingCells[2] = indexOfCurrentSurroundingCell;
-                    cells[surroundingCells[2]].classList.remove('hidden');
-                    console.log('after hidden class removal');
-                }
-            }
+            determineIfSurroundingCellIsMine(i - 9, 2);
     }
     //middle right
     if ((i >= 0 && i <= 8) ||
@@ -175,14 +152,7 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 70 && i <= 78) || 
         (i >= 80 && i <= 88) || 
         (i >= 90 && i <= 98)) {
-            indexOfCurrentSurroundingCell = i + 1;
-            if (cells[indexOfCurrentSurroundingCell].classList.contains('hidden')) {
-                if (!cells[indexOfCurrentSurroundingCell].classList.contains('mine')) {
-                    surroundingCells[3] = indexOfCurrentSurroundingCell;
-                    cells[surroundingCells[3]].classList.remove('hidden');
-                    console.log('after hidden class removal');
-                }
-            }
+            determineIfSurroundingCellIsMine(i + 1, 3);
     }
     //bottom right
     if ((i >= 0 && i <= 8) ||
@@ -194,14 +164,7 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 60 && i <= 68) || 
         (i >= 70 && i <= 78) || 
         (i >= 80 && i <= 88)) {
-            indexOfCurrentSurroundingCell = i + 11;
-            if (cells[indexOfCurrentSurroundingCell].classList.contains('hidden')) {
-                if (!cells[indexOfCurrentSurroundingCell].classList.contains('mine')) {
-                    surroundingCells[4] = indexOfCurrentSurroundingCell;
-                    cells[surroundingCells[4]].classList.remove('hidden');
-                    console.log('after hidden class removal');
-                }
-            }
+            determineIfSurroundingCellIsMine(i + 11, 4);
     }
     //bottom middle
     if ((i >= 0 && i <= 9) ||
@@ -213,14 +176,7 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 60 && i <= 69) || 
         (i >= 70 && i <= 79) || 
         (i >= 80 && i <= 89)) {
-            indexOfCurrentSurroundingCell = i + 10;
-            if (cells[indexOfCurrentSurroundingCell].classList.contains('hidden')) {
-                if (!cells[indexOfCurrentSurroundingCell].classList.contains('mine')) {
-                    surroundingCells[5] = indexOfCurrentSurroundingCell;
-                    cells[surroundingCells[5]].classList.remove('hidden');
-                    console.log('after hidden class removal');
-                }
-            }
+            determineIfSurroundingCellIsMine(i + 10, 5);
     }
     //bottom left
     if ((i >= 1 && i <= 9) ||
@@ -232,14 +188,7 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 61 && i <= 69) || 
         (i >= 71 && i <= 79) || 
         (i >= 81 && i <= 89)) {
-            indexOfCurrentSurroundingCell = i + 9
-            if (cells[indexOfCurrentSurroundingCell].classList.contains('hidden')) {
-                if (!cells[indexOfCurrentSurroundingCell].classList.contains('mine')) {
-                    surroundingCells[6] = indexOfCurrentSurroundingCell;
-                    cells[surroundingCells[6]].classList.remove('hidden');
-                    console.log('after hidden class removal');
-                }
-            }
+            determineIfSurroundingCellIsMine(i + 9, 6);
     }
     //middle left
     if ((i >= 1 && i <= 9) ||
@@ -252,18 +201,24 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 71 && i <= 79) || 
         (i >= 81 && i <= 89) || 
         (i >= 91 && i <= 99)) {
-            indexOfCurrentSurroundingCell = i - 1;
-            if (cells[indexOfCurrentSurroundingCell].classList.contains('hidden')) {
-                if (!cells[indexOfCurrentSurroundingCell].classList.contains('mine')) {
-                    surroundingCells[7] = indexOfCurrentSurroundingCell;
-                    cells[surroundingCells[7]].classList.remove('hidden');
-                    console.log('after hidden class removal');
-                }
-            }
+            determineIfSurroundingCellIsMine(i - 1, 7);
     }
     //TODO: at end of func before recursive call, change text of cells[i] to match counter
     console.log(surroundingCells);
     surroundingCells.forEach(checkAndExpandSurroundingCells);
+}
+
+function determineIfSurroundingCellIsMine(indexOfCurrentSurroundingCell, indexInSurroundingCellArray) {
+    if (cells[indexOfCurrentSurroundingCell].classList.contains('hidden')) {
+        if (cells[indexOfCurrentSurroundingCell].classList.contains('mine')) {
+            numOfSurroundingMines++;
+        }  
+        else {
+            surroundingCells[indexInSurroundingCellArray] = indexOfCurrentSurroundingCell;
+            cells[surroundingCells[indexInSurroundingCellArray]].classList.remove('hidden');
+            console.log('after hidden class removal');
+        }
+    }
 }
 
 initGame();
