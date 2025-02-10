@@ -1,7 +1,7 @@
 let gameBoard = document.getElementById('game-board');
 const ROWS = 10;
 const COLS = 10;
-const MINES_COUNT = 20;
+const MINES_COUNT = 40;
 let gameOverMsg = document.getElementById('game-over');
 let cells = Array.from(document.querySelectorAll('.cell'));
 let mineIndices = new Set();
@@ -203,7 +203,10 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 91 && i <= 99)) {
             determineIfSurroundingCellIsMine(i - 1, 7);
     }
-    //TODO: at end of func before recursive call, change text of cells[i] to match counter
+
+    if (numOfSurroundingMines > 0) {
+        cells[i].innerHTML = '<b>' + numOfSurroundingMines + '</b>';
+    }
     console.log(surroundingCells);
     surroundingCells.forEach(checkAndExpandSurroundingCells);
 }
