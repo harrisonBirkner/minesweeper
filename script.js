@@ -38,7 +38,7 @@ function handleCellClick(i) {
     //game logic for handling cell clicks
     console.log('cell clicked', i);
     cells[i].classList.remove('hidden');
-    console.log('after hidden class removal')
+    console.log('after hidden class removal');
     if (cells[i].classList.contains('mine')) {
         console.log('MINE CLICKED');
         gameOver();
@@ -95,6 +95,9 @@ function pauseGame() {
 }
 
 function checkAndExpandSurroundingCells(i) {
+    if (i == null) {
+        return;
+    }
     let surroundingCells = new Array(8).fill(null); //any given square will have a max of 8 squares surrounding it
                                                     //first index is top left corner, then continues clockwise
     //top left
@@ -108,7 +111,11 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 81 && i <= 89) || 
         (i >= 91 && i <= 99)) {
             if (cells[i - 11].classList.contains('hidden')) {
-                surroundingCells[0] = (i - 11);
+                if (!cells[i - 11].classList.contains('mine')) {
+                    surroundingCells[0] = (i - 11);
+                    cells[surroundingCells[0]].classList.remove('hidden');
+                    console.log('after hidden class removal');
+                }  
             }
     }
     //top middle
@@ -122,7 +129,11 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 80 && i <= 89) || 
         (i >= 90 && i <= 99)) {
             if (cells[i - 10].classList.contains('hidden')) {
-                surroundingCells[1] = (i - 10);
+                if (!cells[i - 10].classList.contains('mine')) {
+                    surroundingCells[1] = (i - 10);
+                    cells[surroundingCells[1]].classList.remove('hidden');
+                    console.log('after hidden class removal');
+                }
             }
     }
     //top right 
@@ -136,7 +147,11 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 80 && i <= 88) || 
         (i >= 90 && i <= 98)) {
             if (cells[i - 9].classList.contains('hidden')) {
-                surroundingCells[2] = (i - 9);
+                if (!cells[i - 9].classList.contains('mine')) {
+                    surroundingCells[2] = (i - 9);
+                    cells[surroundingCells[2]].classList.remove('hidden');
+                    console.log('after hidden class removal');
+                }
             }
     }
     //middle right
@@ -151,7 +166,11 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 80 && i <= 88) || 
         (i >= 90 && i <= 98)) {
             if (cells[i + 1].classList.contains('hidden')) {
-                surroundingCells[3] = (i + 1);
+                if (!cells[i + 1].classList.contains('mine')) {
+                    surroundingCells[3] = (i + 1);
+                    cells[surroundingCells[3]].classList.remove('hidden');
+                    console.log('after hidden class removal');
+                }
             }
     }
     //bottom right
@@ -165,7 +184,11 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 70 && i <= 78) || 
         (i >= 80 && i <= 88)) {
             if (cells[i + 11].classList.contains('hidden')) {
-                surroundingCells[4] = (i + 11);
+                if (!cells[i + 11].classList.contains('mine')) {
+                    surroundingCells[4] = (i + 11);
+                    cells[surroundingCells[4]].classList.remove('hidden');
+                    console.log('after hidden class removal');
+                }
             }
     }
     //bottom middle
@@ -179,7 +202,11 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 70 && i <= 79) || 
         (i >= 80 && i <= 89)) {
             if (cells[i + 10].classList.contains('hidden')) {
-                surroundingCells[5] = (i + 10);
+                if (!cells[i + 10].classList.contains('mine')) {
+                    surroundingCells[5] = (i + 10);
+                    cells[surroundingCells[5]].classList.remove('hidden');
+                    console.log('after hidden class removal');
+                }
             }
     }
     //bottom left
@@ -193,7 +220,11 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 71 && i <= 79) || 
         (i >= 81 && i <= 89)) {
             if (cells[i + 9].classList.contains('hidden')) {
-                surroundingCells[6] = (i + 9);
+                if (!cells[i + 9].classList.contains('mine')) {
+                    surroundingCells[6] = (i + 9);
+                    cells[surroundingCells[6]].classList.remove('hidden');
+                    console.log('after hidden class removal');
+                }
             }
     }
     //middle left
@@ -208,13 +239,15 @@ function checkAndExpandSurroundingCells(i) {
         (i >= 81 && i <= 89) || 
         (i >= 91 && i <= 99)) {
             if (cells[i - 1].classList.contains('hidden')) {
-                surroundingCells[7] = (i - 1);
+                if (!cells[i - 1].classList.contains('mine')) {
+                    surroundingCells[7] = (i - 1);
+                    cells[surroundingCells[7]].classList.remove('hidden');
+                    console.log('after hidden class removal');
+                }
             }
     }
     console.log(surroundingCells);
-    if (surroundingCells[0] != null) {
-        checkAndExpandSurroundingCells(surroundingCells[0]);
-    }
+    surroundingCells.forEach(checkAndExpandSurroundingCells);
 }
 
 initGame();
