@@ -18,32 +18,26 @@ cells.forEach(cell => {
     cell.addEventListener('click', () => handleCellClick(i));
 })
 
-//init game
 function initGame() {
-
-    
-    // Create a unique set of mine indices
+    // Select a random set of squares to be mines
     while (mineIndices.size < MINES_COUNT) {
-        let randomIndex = Math.floor(Math.random() * (ROWS * COLS));
-        mineIndices.add(randomIndex);
+        mineIndices.add(Math.floor(Math.random() * (ROWS * COLS)));
     }
 
-    for (let i = 0; i < cells.length; i++) {
-        //cell.classList.add('cell', 'hidden');
-
+    cells.forEach((cell, i) => {
         // Check if the current index is a mine
         if (mineIndices.has(i)) {
-            cells[i].classList.add('mine'); // Add a class or any indication for mines
+            cell.classList.add('mine');
         }
         else {
+        // if not, assign number to cell
             checkForSurroundingCells(i);
         }
-        cells[i].addEventListener('click', () => handleCellClick(i));
-    }
+        cell.addEventListener('click', () => handleCellClick(i));
+    })
 }
 
 function handleCellClick(i) {
-    //game logic for handling cell clicks
     console.log('cell clicked', i);
     cells[i].classList.remove('hidden');
     console.log('after hidden class removal');
