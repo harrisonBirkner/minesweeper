@@ -14,7 +14,7 @@ let surroundingCells = new Array(8).fill(null); //any given square will have a m
                                                     //first index is top left corner, then continues clockwise
 let numOfSurroundingMines = 0;
 
-cells.forEach(cell => {
+cells.forEach((cell, i) => {
     cell.addEventListener('click', () => handleCellClick(i));
 })
 
@@ -38,15 +38,14 @@ function initGame() {
 }
 
 function handleCellClick(i) {
-    console.log('cell clicked', i);
     cells[i].classList.remove('hidden');
-    console.log('after hidden class removal');
     if (cells[i].classList.contains('mine')) {
-        console.log('MINE CLICKED');
         gameOver();
     }
     else {
-        cells[i].children[0].style.visibility = 'visible';
+        if (cells[i].classList.contains('numbered')) {
+            cells[i].children[0].style.visibility = 'visible';
+        }
         checkAndExpandSurroundingCells(i);
     }
 }
@@ -220,6 +219,9 @@ function checkAndExpandSurroundingCells(i) {
 }
 
 function determineIfSurroundingCellIsNumbered(indexOfCurrentSurroundingCell, indexInSurroundingCellArray, indexofCurrentCell) {
+    if (cells[indexOfCurrentSurroundingCell].classList.contains('mine')) {
+        return;
+    }
     if ((cells[indexOfCurrentSurroundingCell].classList.contains('hidden'))
         && (cells[indexofCurrentCell].classList.contains('blank'))) {
         cells[indexOfCurrentSurroundingCell].classList.remove('hidden');
