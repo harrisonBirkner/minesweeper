@@ -14,6 +14,10 @@ let surroundingCells = new Array(8).fill(null); //any given square will have a m
                                                     //first index is top left corner, then continues clockwise
 let numOfSurroundingMines = 0;
 
+cells.forEach(cell => {
+    cell.addEventListener('click', () => handleCellClick(i));
+})
+
 //init game
 function initGame() {
 
@@ -31,13 +35,10 @@ function initGame() {
         if (mineIndices.has(i)) {
             cells[i].classList.add('mine'); // Add a class or any indication for mines
         }
-        cells[i].addEventListener('click', () => handleCellClick(i));
-    }
-
-    for (let i = 0; i < cells.length; i++) {
-        if (!cells[i].classList.contains('mine')) {
+        else {
             checkForSurroundingCells(i);
         }
+        cells[i].addEventListener('click', () => handleCellClick(i));
     }
 }
 
@@ -94,8 +95,6 @@ function restartGame() {
     numbersToDelete.forEach(number => {
         number.remove();
     });
-    //nodeList.forEach(node => node.remove());
-    //TODO: delete <b> tags
 
     initGame();
 }
@@ -229,7 +228,6 @@ function checkAndExpandSurroundingCells(i) {
 function determineIfSurroundingCellIsNumbered(indexOfCurrentSurroundingCell, indexInSurroundingCellArray, indexofCurrentCell) {
     if ((cells[indexOfCurrentSurroundingCell].classList.contains('hidden'))
         && (cells[indexofCurrentCell].classList.contains('blank'))) {
-        //TODO: make numbers visible after reveal
         cells[indexOfCurrentSurroundingCell].classList.remove('hidden');
         if (cells[indexOfCurrentSurroundingCell].classList.contains('numbered')) {
             cells[indexOfCurrentSurroundingCell].children[0].style.visibility = 'visible';
